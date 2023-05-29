@@ -1,10 +1,7 @@
 import random
-from distutils.util import strtobool
-
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.tensorboard import SummaryWriter
 
 from tqdm import tqdm
 import torch
@@ -45,9 +42,10 @@ def train(trainloaer, testloader, hyperparameters):
     optimizer = hyperparameters["optimizer"]
     seed = hyperparameters["seed"]
     EXP_NAME = hyperparameters["EXP_NAME"]
+    DIR_LOGS = hyperparameters["DIR_LOGS"]
     
     torch.manual_seed(seed)
-    writer = SummaryWriter(os.path.join("./","runs", EXP_NAME))
+    writer = SummaryWriter(os.path.join("./",DIR_LOGS, EXP_NAME))
 
     for epoch in tqdm(range(EPOCHS)):  # loop over the dataset multiple times
 
@@ -90,7 +88,8 @@ if __name__ == "__main__":
         "net": net,
         "optimizer": torch.optim.SGD(net.parameters(),lr = 1e-1, weight_decay=0.0001, momentum=0.9),
         "seed" : 42,
-        "EXP_NAME": "test" + str(random.randint(0,1000000))
+        "EXP_NAME": "test" + str(random.randint(0,1000000)),
+        "DIR_LOGS": "logs"
     }
     
     training_loader,validation_loader = load_data()

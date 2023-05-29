@@ -107,5 +107,7 @@ class ResNet18(nn.Module):
 if __name__ == "__main__":
     x = torch.randn((4,1,224,224))
     net = ResNet18()
-    assert net(x).shape == torch.Size([4,10]), "Something went wrong"
+    res = net(x)
+    print(res.shape)
+    assert res.shape == torch.Size([4,10]), "Something went wrong"
     print("...END...")
